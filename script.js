@@ -1,111 +1,110 @@
-let currentScore = 0;
+let score = 0;
 let currentQuestionIndex = 0;
-let difficultyLevel = '';
-let quizQuestions = [];
+let correctAnswers = 0;
 
-const startGame = () => {
-    document.getElementById('start-btn').style.display = 'none';
-    document.getElementById('difficulty-selection').style.display = 'block';
-};
+const questions = [
+    {
+        question: "Who is the main character of One Piece?",
+        options: ["Luffy", "Zoro", "Sanji", "Nami"],
+        correctOption: 1, // Luffy
+        description: "Monkey D. Luffy is the main protagonist of One Piece, aiming to become the Pirate King."
+    },
+    {
+        question: "Who is known as the 'Reaper' in Death Note?",
+        options: ["Light Yagami", "L", "Ryuk", "Misa Amane"],
+        correctOption: 3, // Ryuk
+        description: "Ryuk is the Shinigami who drops the Death Note into the human world, setting the story in motion."
+    },
+    {
+        question: "Who is the 'Certified Otaku' in Naruto?",
+        options: ["Naruto Uzumaki", "Sasuke Uchiha", "Kakashi Hatake", "Rock Lee"],
+        correctOption: 1, // Naruto Uzumaki
+        description: "Naruto Uzumaki is the main character who dreams of becoming Hokage to gain the village's respect."
+    },
+    {
+        question: "Which anime features the character 'Goku'?",
+        options: ["Dragon Ball Z", "Naruto", "One Piece", "Attack on Titan"],
+        correctOption: 1, // Dragon Ball Z
+        description: "Goku is the main character in Dragon Ball Z, known for his immense strength and love for fighting."
+    },
+    {
+        question: "Who is the protagonist of My Hero Academia?",
+        options: ["Izuku Midoriya", "Katsuki Bakugo", "Shoto Todoroki", "All Might"],
+        correctOption: 1, // Izuku Midoriya
+        description: "Izuku Midoriya is a Quirkless boy who dreams of becoming the world's greatest hero."
+    },
+    {
+        question: "Who is the captain of the Straw Hat Pirates?",
+        options: ["Luffy", "Zoro", "Nami", "Usopp"],
+        correctOption: 1, // Luffy
+        description: "Luffy is the captain of the Straw Hat Pirates, determined to find the One Piece and become the Pirate King."
+    },
+    {
+        question: "Which anime character has the power of 'Rinnegan'?",
+        options: ["Sasuke Uchiha", "Naruto Uzumaki", "Madara Uchiha", "Itachi Uchiha"],
+        correctOption: 1, // Sasuke Uchiha
+        description: "Sasuke Uchiha obtains the Rinnegan, a powerful Dojutsu, in his quest for revenge and peace."
+    },
+    {
+        question: "In which anime does the character 'Kagome' appear?",
+        options: ["Inuyasha", "Naruto", "Bleach", "Fairy Tail"],
+        correctOption: 1, // Inuyasha
+        description: "Kagome Higurashi is the protagonist of Inuyasha, who travels to the past to help the half-demon, Inuyasha."
+    },
+    {
+        question: "Which anime character is known for saying 'Bankai'?",
+        options: ["Ichigo Kurosaki", "Naruto Uzumaki", "Luffy", "Kenshin Himura"],
+        correctOption: 1, // Ichigo Kurosaki
+        description: "Ichigo Kurosaki is the main character of Bleach, who uses 'Bankai' to activate his sword's full power."
+    },
+    {
+        question: "Who is the strongest fighter in Dragon Ball Z?",
+        options: ["Goku", "Vegeta", "Frieza", "Cell"],
+        correctOption: 1, // Goku
+        description: "Goku is the strongest fighter in Dragon Ball Z, known for his Saiyan strength and his ability to break limits."
+    },
+    // Add more questions up to 30-40...
+];
 
-const startQuiz = (difficulty) => {
-    difficultyLevel = difficulty;
-    // Load questions based on difficulty
-    loadQuestions(difficultyLevel);
-    document.getElementById('difficulty-selection').style.display = 'none';
-    document.getElementById('quiz-container').style.display = 'block';
-    showQuestion(currentQuestionIndex);
-};
-
-const loadQuestions = (difficulty) => {
-    // Placeholder data (replace with actual question set for each difficulty)
-    const easyQuestions = [
-        {
-            question: "This green-haired boy was born quirkless but inherits the power of the greatest hero.",
-            options: ["Deku", "Luffy", "Naruto", "Ichigo"],
-            answer: "Deku"
-        },
-        {
-            question: "This guy wears a straw hat, loves meat, and wants to become the King of the Pirates.",
-            options: ["Luffy", "Zoro", "Kakashi", "Natsu"],
-            answer: "Luffy"
-        }
-    ];
-
-    const mediumQuestions = [
-        {
-            question: "This silver-haired samurai is lazy, loves sweets, and always finds himself in ridiculous situations.",
-            options: ["Gintoki", "Kakashi", "Todoroki", "Natsu"],
-            answer: "Gintoki"
-        }
-    ];
-
-    const hardQuestions = [
-        {
-            question: "This young assassin is a genius, skilled in electricity, and has a killer instinct.",
-            options: ["Killua", "Goku", "Saitama", "Kamina"],
-            answer: "Killua"
-        }
-    ];
-
-    if (difficulty === 'easy') {
-        quizQuestions = easyQuestions;
-    } else if (difficulty === 'medium') {
-        quizQuestions = mediumQuestions;
-    } else {
-        quizQuestions = hardQuestions;
+function loadQuestion() {
+    const currentQuestion = questions[currentQuestionIndex];
+    document.getElementById('question').innerText = currentQuestion.question;
+    
+    for (let i = 1; i <= 4; i++) {
+        document.getElementById('option' + i).innerText = currentQuestion.options[i - 1];
     }
-};
 
-const showQuestion = (index) => {
-    const question = quizQuestions[index];
-    document.getElementById('quiz-question').textContent = question.question;
-    const optionsContainer = document.getElementById('quiz-options');
-    optionsContainer.innerHTML = '';
+    document.getElementById('message').innerText = "";
+}
 
-    question.options.forEach((option) => {
-        const optionBtn = document.createElement('button');
-        optionBtn.textContent = option;
-        optionBtn.onclick = () => checkAnswer(option);
-        optionsContainer.appendChild(optionBtn);
-    });
-};
-
-const checkAnswer = (selectedOption) => {
-    const correctAnswer = quizQuestions[currentQuestionIndex].answer;
-    if (selectedOption === correctAnswer) {
-        currentScore += 1;
+function checkAnswer(selectedOption) {
+    const currentQuestion = questions[currentQuestionIndex];
+    
+    if (selectedOption === currentQuestion.correctOption) {
+        score += 1;
+        document.getElementById('score').innerText = "Score: " + score;
+        document.getElementById('message').innerText = "Correct Answer!";
+        document.getElementById('option' + selectedOption).classList.add("correct");
     } else {
-        currentScore -= 0.5;
+        score -= 0.5;
+        document.getElementById('score').innerText = "Score: " + score;
+        document.getElementById('message').innerText = "Better luck next time!";
+        document.getElementById('option' + selectedOption).classList.add("incorrect");
     }
+
+    setTimeout(nextQuestion, 2000);  // Delay of 2 seconds before moving to the next question
+}
+
+function nextQuestion() {
     currentQuestionIndex++;
-    if (currentQuestionIndex < quizQuestions.length) {
-        showQuestion(currentQuestionIndex);
+    if (currentQuestionIndex < questions.length) {
+        loadQuestion();
     } else {
-        endGame();
+        document.getElementById('message').innerText = "You finished the quiz!";
+        document.getElementById('score').innerText = "Final Score: " + score;
+        document.querySelector('.options-container').style.display = "none";  // Hide options
     }
-};
+}
 
-const nextQuestion = () => {
-    if (currentQuestionIndex < quizQuestions.length) {
-        showQuestion(currentQuestionIndex);
-    }
-};
-
-const endGame = () => {
-    document.getElementById('quiz-container').style.display = 'none';
-    document.getElementById('score-container').style.display = 'block';
-    document.getElementById('score').textContent = currentScore;
-    if (currentScore >= 20) {
-        document.getElementById('certification').textContent = 'Certified Otaku!';
-    } else {
-        document.getElementById('certification').textContent = 'Better luck next time!';
-    }
-};
-
-const restartGame = () => {
-    currentScore = 0;
-    currentQuestionIndex = 0;
-    document.getElementById('score-container').style.display = 'none';
-    document.getElementById('start-btn').style.display = 'block';
-};
+// Initialize the game
+loadQuestion();
