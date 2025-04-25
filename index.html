@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Challenge</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Anime Challenge!</h1>
+        <button id="start-btn" onclick="startGame()">Take the Challenge</button>
+    </div>
+
+    <div id="difficulty-selection" class="container" style="display:none;">
+        <h2>Select Difficulty</h2>
+        <button onclick="startQuiz('easy')">Easy</button>
+        <button onclick="startQuiz('medium')">Medium</button>
+        <button onclick="startQuiz('hard')">Hard</button>
+    </div>
+
+    <div id="quiz-container" class="container" style="display:none;">
+        <h2 id="quiz-question">Hint will go here</h2>
+        <div id="quiz-options"></div>
+        <button id="next-btn" onclick="nextQuestion()">Next</button>
+    </div>
+
+    <div id="score-container" class="container" style="display:none;">
+        <h2>Your Score: <span id="score">0</span></h2>
+        <h3 id="certification"></h3>
+        <button onclick="restartGame()">Try Again</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
